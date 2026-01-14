@@ -4,16 +4,16 @@ const products = [
     {
         id: 1,
         name: "Premium OEM Seat Covers",
-        description: "OEM-authorized genuine leather covers with custom fitment as per OEM specifications.",
+        description: "OEM genuine leather covers with custom fitment as per OEM specifications.",
         image: "./assets/seat-covers.jpeg",
-        category: "OEM Solutions"
+        category: "Seat cover"
     },
     {
         id: 2,
-        name: "Custom-Fit 7D Floor Mats",
+        name: "Custom-Fit Floor Mats",
         description: "Premium all-weather protection floor mats with perfect fitment and luxury finish.",
         image: "./assets/mat.jpeg",
-        category: "Accessories"
+        category: "Foot mat"
     },
     {
         id: 3,
@@ -21,19 +21,26 @@ const products = [
         description: "High-fidelity infotainment and sound systems with Android Auto and Apple CarPlay.",
         image: "./assets/audio-systems.jpeg",
         category: "Electronics"
+    },
+    {
+        id: 4,
+        name: "Seat Covers",
+        description: "Hand-stitched premium leather seat covers designed for maximum comfort and style.",
+        image: "./assets/seat-covers2.jpeg", // temp image
+        category: "Seat cover"
     }
 ];
 
 let displayedCount = 0;
-const productsPerPage = 3;
+const productsPerPage = 4;
 const productGrid = document.getElementById('product-grid');
 
 function createProductCard(product) {
     return `
         <div class="product-card bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
-            <div class="aspect-[16/10] bg-slate-100 overflow-hidden relative">
-                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/800x500/e2e8f0/64748b?text=${encodeURIComponent(product.name)}'">
-                <div class="absolute top-4 left-4">
+            <div class="aspect-[16/10] bg-white overflow-hidden relative">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/800x500/e2e8f0/64748b?text=${encodeURIComponent(product.name)}'">
+                <div class="absolute top-4 left-4 z-20">
                     <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] font-black uppercase tracking-widest text-blue-600 rounded-full shadow-sm font-sans">
                         ${product.category}
                     </span>
@@ -52,12 +59,10 @@ function createProductCard(product) {
 
 function loadProducts() {
     const nextProducts = products.slice(displayedCount, displayedCount + productsPerPage);
-
     nextProducts.forEach(product => {
         const card = createProductCard(product);
         productGrid.insertAdjacentHTML('beforeend', card);
     });
-
     displayedCount += nextProducts.length;
 }
 
@@ -91,12 +96,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Contact Form Submission
+    // Contact Form Submission (WhatsApp Redirect)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('Thank you for reaching out! We have received your message and will get back to you soon at growxindiamart2025@gmail.com.');
+
+            const name = document.getElementById('form-name').value;
+            const city = document.getElementById('form-city').value;
+            const message = document.getElementById('form-message').value;
+
+            const phone = "918368710622";
+            const whatsappMessage = `Hello GROWX INDIA MART!%0A%0A*Name:* ${encodeURIComponent(name)}%0A*City:* ${encodeURIComponent(city)}%0A*Requirement:* ${encodeURIComponent(message)}`;
+
+            const whatsappUrl = `https://wa.me/${phone}?text=${whatsappMessage}`;
+
+            // Redirect to WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Show feedback
+            alert('Opening WhatsApp to send your enquiry...');
             contactForm.reset();
         });
     }
