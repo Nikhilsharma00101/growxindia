@@ -1,5 +1,3 @@
 node_modules
 .DS_Store
-dist/output.css
-# Keep the dist folder if you want to host it directly, 
-# but usually it's generated. We'll keep it for now as per user preference for vanilla setup.
+public/dist/output.css
